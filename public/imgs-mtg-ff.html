@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Card Carousel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.core.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.theme.min.css">
@@ -9,99 +10,67 @@
         html, body {
             margin: 0;
             padding: 0;
-            width: 100%;
             height: 100%;
-            overflow: hidden;
-            background: transparent;
+            width: 100%;
         }
 
         .glide {
-            width: 100%;
             height: 100%;
-            background: transparent;
+            width: 100%;
+            position: relative;
             display: flex;
             flex-direction: column;
         }
 
         .glide__track {
             flex: 1;
-            background: transparent;
-            /* Push track to fill available space */
             min-height: 0;
-            display: flex;
-            flex-direction: column;
+            max-height: calc(100% - 50px); /* Reserve space for bullets */
         }
 
         .glide__slides {
-            flex: 1;
             display: flex;
             align-items: center;
+            height: 100%;
         }
 
         .glide__slide {
-            height: 100%;
-            display: flex !important;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .card-container {
+            text-align: center;
             height: 100%;
             display: flex;
-            justify-content: center;
             align-items: center;
-            padding: 10px;
-            box-sizing: border-box;
+            justify-content: center;
         }
 
         .glide__slide img {
-            height: 95vh; /* Increased from 85vh to 95vh */
+            height: 95%; /* Slightly reduced from 100% */
             width: auto;
             object-fit: contain;
-            max-width: 100%;
         }
 
-        /* Compact bullet navigation */
         .glide__bullets {
-            padding: 5px 0;
-            margin: 0;
+            height: 50px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: auto; /* Push to bottom */
+            background: transparent;
         }
 
         .glide__bullet {
-            background-color: rgba(255, 255, 255, 0.5);
-            width: 8px;
-            height: 8px;
+            width: 16px;
+            height: 16px;
             padding: 0;
             border-radius: 50%;
-            border: 2px solid transparent;
-            transition: all 300ms ease-in-out;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: none;
+            margin: 0 8px;
             cursor: pointer;
-            line-height: 0;
-            box-shadow: 0 0.25em 0.5em 0 rgba(0, 0, 0, 0.1);
-            margin: 0 0.25em;
-        }
-
-        .glide__bullet:hover,
-        .glide__bullet:focus {
-            border: 2px solid white;
-            background-color: rgba(255, 255, 255, 0.5);
         }
 
         .glide__bullet--active {
-            background-color: white;
-        }
-
-        /* Responsive adjustments */
-        @media (min-width: 768px) {
-            .glide__slide img {
-                height: 95vh;
-            }
-        }
-
-        @media (min-width: 1200px) {
-            .glide__slide img {
-                height: 95vh;
-            }
+            background-color: black;
         }
     </style>
 </head>
@@ -110,29 +79,20 @@
         <div class="glide__track" data-glide-el="track">
             <ul class="glide__slides">
                 <li class="glide__slide">
-                    <div class="card-container">
-                        <img src="./images/mtg_ff_cmd1.png" />
-                    </div>
+                    <img src="./images/mtg_ff_cmd1.png" alt="Card 1" />
                 </li>
                 <li class="glide__slide">
-                    <div class="card-container">
-                        <img src="./images/mtg_ff_cmd2.png" />
-                    </div>
+                    <img src="./images/mtg_ff_cmd2.png" alt="Card 2" />
                 </li>
                 <li class="glide__slide">
-                    <div class="card-container">
-                        <img src="./images/mtg_ff_cmd3.png" />
-                    </div>
+                    <img src="./images/mtg_ff_cmd3.png" alt="Card 3" />
                 </li>
                 <li class="glide__slide">
-                    <div class="card-container">
-                        <img src="./images/mtg_ff_cmd4.png" />
-                    </div>
+                    <img src="./images/mtg_ff_cmd4.png" alt="Card 4" />
                 </li>
             </ul>
         </div>
         
-        <!-- Bullet navigation -->
         <div class="glide__bullets" data-glide-el="controls[nav]">
             <button class="glide__bullet" data-glide-dir="=0"></button>
             <button class="glide__bullet" data-glide-dir="=1"></button>
@@ -143,13 +103,14 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/glide.min.js"></script>
     <script>
-        const glide = new Glide('.glide', {
-            type: "slider",
-            startAt: 0,
-            perView: 1,
-            gap: 0,
-            rewind: false
-        }).mount();
+        window.addEventListener('load', function() {
+            new Glide('.glide', {
+                type: 'carousel',
+                startAt: 0,
+                perView: 1,
+                gap: 0
+            }).mount();
+        });
     </script>
 </body>
 </html>
