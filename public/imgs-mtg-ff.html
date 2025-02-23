@@ -16,7 +16,7 @@
         }
 
         .glide {
-            width: 100vw;
+            width: 100%;
             height: 100%;
             background: transparent;
             overflow: visible;
@@ -38,16 +38,25 @@
 
         .glide__slide {
             height: 100%;
-            width: 40vw;  /* Set fixed width for slides */
             display: flex !important;
             justify-content: center;
             align-items: center;
+            transition: transform 0.3s ease;
         }
 
         .glide__slide img {
-            max-height: 95%;
+            height: 85vh;
             width: auto;
             object-fit: contain;
+        }
+
+        /* Container to help manage card spacing */
+        .card-container {
+            padding: 0 2vw;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     </style>
 </head>
@@ -56,16 +65,24 @@
         <div class="glide__track" data-glide-el="track">
             <ul class="glide__slides">
                 <li class="glide__slide">
-                    <img src="./images/mtg_ff_cmd1.png" />
+                    <div class="card-container">
+                        <img src="./images/mtg_ff_cmd1.png" />
+                    </div>
                 </li>
                 <li class="glide__slide">
-                    <img src="./images/mtg_ff_cmd2.png" />
+                    <div class="card-container">
+                        <img src="./images/mtg_ff_cmd2.png" />
+                    </div>
                 </li>
                 <li class="glide__slide">
-                    <img src="./images/mtg_ff_cmd3.png" />
+                    <div class="card-container">
+                        <img src="./images/mtg_ff_cmd3.png" />
+                    </div>
                 </li>
                 <li class="glide__slide">
-                    <img src="./images/mtg_ff_cmd4.png" />
+                    <div class="card-container">
+                        <img src="./images/mtg_ff_cmd4.png" />
+                    </div>
                 </li>
             </ul>
         </div>
@@ -73,15 +90,31 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/glide.min.js"></script>
     <script>
+        // Function to calculate peek based on window width
+        function calculatePeek() {
+            const windowWidth = window.innerWidth;
+            // Base peek on a percentage of window width
+            const peekAmount = Math.floor(windowWidth * 0.15); // 15% of window width
+            return { before: peekAmount, after: peekAmount };
+        }
+
+        // Initialize Glide with dynamic peek
         const glide = new Glide('.glide', {
-            type: "carousel",
+            type: "slider",
             startAt: 0,
             perView: 1,
             focusAt: 'center',
-            peek: { before: 150, after: 150 },
+            peek: calculatePeek(),
             gap: 0,
             rewind: false
         }).mount();
+
+        // Update peek values on window resize
+        window.addEventListener('resize', () => {
+            glide.update({
+                peek: calculatePeek()
+            });
+        });
     </script>
 </body>
 </html>
